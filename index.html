@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZenTho Game Shop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark bg-gray-900 text-yellow-500">
+    <div id="app" class="flex flex-col min-h-screen">
+        <header class="flex items-center justify-between p-4 bg-gray-800 embossed z-50">
+            <button id="menu-btn" class="p-2 rounded-lg embossed bg-gray-700 text-yellow-500">
+                <i class="fas fa-bars fa-lg"></i>
+            </button>
+            <div class="flex-grow flex items-center justify-center gap-2">
+                <h1 id="app-title" class="text-base font-bold embossed-text"></h1>
+                <span id="header-balance" class="text-base font-bold text-yellow-400"></span>
+            </div>
+            <button id="profile-btn" class="p-2 rounded-lg embossed bg-gray-700 text-yellow-500">
+                <div id="profile-icon-container" class="w-7 h-7 rounded-full overflow-hidden flex items-center justify-center">
+                    <i class="fas fa-user-circle fa-lg"></i>
+                </div>
+            </button>
+        </header>
+
+        <div id="side-menu" class="fixed top-0 left-0 w-64 h-full bg-gray-800 embossed z-40 transition-transform -translate-x-full">
+            <div class="p-4 border-b border-gray-700 flex items-center justify-between">
+                <h2 class="text-xl font-bold embossed-text" id="menu-title"></h2>
+                <button id="close-menu-btn" class="p-2 rounded-lg embossed bg-gray-700 text-yellow-500">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <nav class="flex flex-col py-4">
+                <button data-view="home" class="view-btn menu-item px-4 py-3 text-sm text-left flex items-center gap-4">
+                    <i class="fas fa-home"></i> <span id="nav-games"></span>
+                </button>
+                <button data-view="wallet" class="view-btn menu-item px-4 py-3 text-sm text-left flex items-center gap-4">
+                    <i class="fas fa-wallet"></i> <span id="nav-wallet"></span>
+                </button>
+                <button data-view="purchase-history" class="view-btn menu-item px-4 py-3 text-sm text-left flex items-center gap-4">
+                    <i class="fas fa-history"></i> <span id="nav-purchase-history"></span>
+                </button>
+                <button data-view="deposit-history" class="view-btn menu-item px-4 py-3 text-sm text-left flex items-center gap-4">
+                    <i class="fas fa-money-check-alt"></i> <span id="nav-deposit-history"></span>
+                </button>
+                <button data-view="settings" class="view-btn menu-item px-4 py-3 text-sm text-left flex items-center gap-4">
+                    <i class="fas fa-cog"></i> <span id="nav-settings"></span>
+                </button>
+                <button data-view="profile" class="view-btn menu-item px-4 py-3 text-sm text-left flex items-center gap-4">
+                    <i class="fas fa-user-circle"></i> <span id="nav-profile"></span>
+                </button>
+                <button data-view="help-center" class="view-btn menu-item px-4 py-3 text-sm text-left flex items-center gap-4">
+                    <i class="fas fa-question-circle"></i> <span id="nav-help-center"></span>
+                </button>
+                <button data-view="about" class="view-btn menu-item px-4 py-3 text-sm text-left flex items-center gap-4">
+                    <i class="fas fa-info-circle"></i> <span id="nav-about"></span>
+                </button>
+            </nav>
+            <div class="absolute bottom-4 left-4 text-xs text-gray-400">
+                Version: 1.5.2
+            </div>
+        </div>
+        
+        <div id="menu-overlay" class="fixed inset-0 bg-black opacity-0 transition-opacity duration-300 pointer-events-none z-30"></div>
+
+        <div id="how-to-modal" class="modal-overlay fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+            <div class="bg-gray-800 text-yellow-500 rounded-lg p-6 w-full max-w-md embossed">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 id="how-to-title" class="text-xl font-bold embossed-text"></h3>
+                    <button id="close-how-to-modal" class="p-2 rounded-lg embossed bg-gray-700 text-yellow-500">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div id="how-to-content" class="text-sm space-y-3"></div>
+            </div>
+        </div>
+        
+        <div id="language-modal" class="modal-overlay fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+            <div class="bg-gray-800 text-yellow-500 rounded-lg p-6 w-full max-w-sm embossed text-center">
+                <h3 class="text-xl font-bold mb-4 embossed-text" id="lang-modal-title"></h3>
+                <div class="space-y-4">
+                    <button id="lang-my" class="lang-btn w-full py-3 px-4 bg-gray-700 rounded-lg embossed text-left flex items-center gap-4">
+                        <i class="fas fa-globe mr-2"></i> မြန်မာ
+                    </button>
+                    <button id="lang-en" class="lang-btn w-full py-3 px-4 bg-gray-700 rounded-lg embossed text-left flex items-center gap-4">
+                        <i class="fas fa-globe mr-2"></i> English
+                    </button>
+                </div>
+                <button id="close-language-modal" class="mt-6 py-2 px-4 bg-gray-700 rounded-lg embossed text-sm">
+                    ပိတ်မည်
+                </button>
+            </div>
+        </div>
+
+        <main id="content-area" class="flex-grow p-4 pt-8 md:pt-12">
+            </main>
+
+        <div id="message-modal" class="modal-overlay fixed inset-0 flex items-center justify-center p-4 z-50 hidden">
+            <div class="bg-gray-800 text-yellow-500 rounded-lg p-6 w-full max-w-sm embossed text-center relative">
+                <h3 id="modal-title" class="text-xl font-bold mb-4 embossed-text"></h3>
+                <p id="modal-message" class="text-sm mb-4"></p>
+                <div id="modal-actions" class="flex justify-center gap-4">
+                    <button id="close-message-modal" class="py-2 px-4 bg-gray-700 rounded-lg embossed text-sm">
+                        ပိတ်မည်
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
